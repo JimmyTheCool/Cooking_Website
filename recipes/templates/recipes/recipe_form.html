@@ -2,17 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Recipe - {{ recipe.title }}</title>
+    <title>
+        {% if recipe %}Edit Recipe - {{ recipe.title }}{% else %}Add New Recipe{% endif %}
+    </title>
     <style>body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; line-height: 1.6; }</style>
 </head>
 <body>
-    <a href="{% url 'recipe_detail' recipe.pk %}">&larr; Back to recipe</a>
-    <h1>Edit: {{ recipe.title }}</h1>
+    
+    <!-- Conditionally render the back link and header -->
+    {% if recipe %}
+        <a href="{% url 'recipe_detail' recipe.pk %}">&larr; Back to recipe</a>
+        <h1>Edit: {{ recipe.title }}</h1>
+    {% else %}
+        <a href="{% url 'recipe_list' %}">&larr; Back to all recipes</a>
+        <h1>Add New Recipe</h1>
+    {% endif %}
     
     <form method="POST">
-        {% csrf_token %} <!-- Required security token for Django forms -->
-        {{ form.as_p }}  <!-- Renders the form fields wrapped in paragraph tags -->
-        <button type="submit" style="padding: 10px 20px; background: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">Save Changes</button>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" style="padding: 10px 20px; background: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">Save Recipe</button>
     </form>
 </body>
 </html>
