@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Recipe, RecipePhoto
 from .forms import RecipeForm, RecipePhotoForm
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def recipe_list(request):
     # Capture the search term and selected category from the URL
     search_query = request.GET.get('search', '')
@@ -30,6 +32,7 @@ def recipe_list(request):
     
     return render(request, 'recipes/recipe_list.html', context)
 
+@login_required
 def recipe_detail(request, pk):
     # Grab the specific recipe, or return a 404 error if it doesn't exist
     recipe = get_object_or_404(Recipe, pk=pk)
@@ -43,7 +46,7 @@ def recipe_detail(request, pk):
     }
     return render(request, 'recipes/recipe_detail.html', context)
 
-
+@login_required
 def recipe_edit(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
     
@@ -59,6 +62,7 @@ def recipe_edit(request, pk):
         
     return render(request, 'recipes/recipe_form.html', {'form': form, 'recipe': recipe})
 
+@login_required
 def photo_upload(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
     
@@ -74,3 +78,14 @@ def photo_upload(request, pk):
         form = RecipePhotoForm()
         
     return render(request, 'recipes/photo_upload_form.html', {'form': form, 'recipe': recipe})
+
+@login_required
+def recipe_create(request):
+    if request.method == 'POST':
+        form = RecipeForm(request.POST)
+        if form.is_valid():
+            new_recipe = form.save()
+            return redirect('recipe_detail', pk=new_recipe.pk)
+    else:
+        form = RecipeForm()
+    return render(request, 'recipes/recipe_form.html', {'form': form})
