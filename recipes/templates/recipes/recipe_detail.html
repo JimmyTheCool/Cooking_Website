@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,22 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ recipe.title }} - Family Cookbook</title>
     <style>
-.carousel-container { position: relative; max-width: 400px; margin-bottom: 20px; }
-        .carousel-slide { display: none; widt{% if recipe.photos.all %}h: 100%; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden; }
-        .carousel-slide.active { display: block; }
-        .carousel-slide img { width: 100%; height: 400px; object-fit: cover; display: block; background: #f4f4f4; }
-        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.6); color: white; border: none; padding: 12px 16px; cursor: pointer; border-radius: 50%; font-size: 18px; transition: 0.3s; z-index: 10; }
-        .carousel-btn:hover { background: rgba(0, 0, 0, 0.9); }
-        .prev-btn { left: 10px; }
-        .next-btn { right: 10px; }
-
         body { font-family: sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; line-height: 1.6; }
         .back-link { display: inline-block; margin-bottom: 20px; text-decoration: none; color: #007BFF; }
         .category-tag { background: #007BFF; color: white; padding: 3px 8px; border-radius: 3px; font-size: 0.8em; }
         .ingredient-item { margin-bottom: 8px; }
         .instructions-box { background: #f9f9f9; padding: 20px; border-radius: 5px; border-left: 4px solid #007BFF; white-space: pre-wrap; }
         
-        /* The new carousel CSS goes here, INSIDE the style tags */
+        /* Carousel CSS */
         .carousel-container { position: relative; max-width: 400px; margin-bottom: 20px; }
         .carousel-slide { display: none; width: 100%; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden; }
         .carousel-slide.active { display: block; }
@@ -40,36 +29,25 @@
     <h1>{{ recipe.title }}</h1>
     <p><span class="category-tag">{{ recipe.category }}</span> <strong>Author:</strong> {{ recipe.author|default:"Unknown" }}</p>
 
-    <hr>
-<!-- Recipe Photo Carousel -->
+    <!-- Recipe Photo Carousel -->
     {% if recipe.photos.all %}
         <div class="carousel-container">
-            <!-- Only show the left arrow if there is more than 1 photo -->
             {% if recipe.photos.all.count > 1 %}
                 <button class="carousel-btn prev-btn" onclick="moveSlide(-1)">&#10094;</button>
             {% endif %}
             
             {% for photo in recipe.photos.all %}
-                <!-- The first photo gets the 'active' class so it shows up by default -->
                 <div class="carousel-slide {% if forloop.first %}active{% endif %}">
                     <img src="{{ photo.image.url }}" alt="Photo of {{ recipe.title }}">
                 </div>
             {% endfor %}
             
-            <!-- Only show the right arrow if there is more than 1 photo -->
             {% if recipe.photos.all.count > 1 %}
                 <button class="carousel-btn next-btn" onclick="moveSlide(1)">&#10095;</button>
             {% endif %}
         </div>
     {% endif %}
-        <div class="photo-gallery">
-            {% for photo in recipe.photos.all %}
-                <img src="{{ photo.image.url }}" alt="Photo of {{ recipe.title }}" class="recipe-photo">
-            {% endfor %}
-        </div>
-    {% endif %}
-    
-    <hr>
+
     <div style="margin-bottom: 20px;">
         <a href="{% url 'recipe_edit' recipe.pk %}">
             <button style="padding: 8px 15px; cursor: pointer;">Edit Recipe</button>
@@ -78,10 +56,10 @@
             <button style="padding: 8px 15px; cursor: pointer;">Upload a Photo</button>
         </a>
     </div>
+    
+    <hr>
+    
     <h2>Ingredients</h2>
-    <!-- (Your existing ingredient code stays here) -->
-    <h2>Ingredients</h2>
-    <!-- The interactive checkboxes -->
     <form>
         {% for ingredient in ingredients_list %}
             <div class="ingredient-item">
@@ -92,32 +70,29 @@
     </form>
 
     <h2>Instructions</h2>
-    <!-- white-space: pre-wrap in the CSS ensures line breaks are respected here -->
     <div class="instructions-box">{{ recipe.instructions }}</div>
-<script>
+
+    <!-- Carousel Logic -->
+    <script>
         let slideIndex = 0;
         const slides = document.querySelectorAll('.carousel-slide');
 
         function moveSlide(n) {
-            // If there are no slides or only 1, do nothing
+            // Safe guard: check if slides exist before manipulating them
             if (slides.length <= 1) return;
             
-            // Hide the currently active slide
             slides[slideIndex].classList.remove('active');
-            
-            // Move the index forward or backward
             slideIndex += n;
             
-            // Loop back around if we reach the end or beginning
             if (slideIndex >= slides.length) {
                 slideIndex = 0;
             } else if (slideIndex < 0) {
                 slideIndex = slides.length - 1;
             }
             
-            // Show the new slide
             slides[slideIndex].classList.add('active');
         }
     </script>
+
 </body>
 </html>
