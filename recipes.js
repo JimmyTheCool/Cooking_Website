@@ -782,5 +782,13 @@ const recipeData = [
         "Ingredients": "4-6 Servings\n3 tablespoon oil\n2 medium onions\n1 \u00bd inch ginger\n2 garlic cloves\n2 green chillies, chopped\n1 teaspoon turmeric\n1 tablespoon coriander\n\u2154 cup beans\n\u2154 cup peas\n1 tablespoon paprika\n\u00bd teaspoon cayenne\n\u00bc teaspoon fenugreek\n\u00bc teaspoon black pepper\n2 tablespoons lemon juice\n\u00bd kg potatoes, cubed\n1 turnip, cubed\n3 carrots, sliced\n425g canned tomatoes",
         "Instructions": "Heat oil and add onions, ginger, garlic, paprika, cayenne, fenugreek, and pepper. Mix lemon juice and a little water to make a smooth paste; add to onions and fry for 5 minutes.\nAdd potatoes, turnip, and carrots; fry for 5 minutes stirring constantly. Stir in tomatoes, beans, peas, and turmeric. Bring to boil, reduce heat, cover, and simmer 25 minutes.",
         "Author": "Sharyn Vary"
+    },
+    {
+        "ID": 99,
+        "Title": "A-B-C Soup",
+        "Category": "Soups",
+        "Ingredients": "1.5kg chicken with bone (chicken drum-sticks)\n1 bulb of garlic\n300 to 400g potato\n300 to 400g tomato\n300 to 400g brown onion\n300 to 400g carrot\nsalt or soya sauce to taste\n",
+        "Instructions": "Bring small pot of water to boil.\nBlanch the chicken (wash gunk off).\nPut blanched chicken into big pot.\nFill big pot to half way to let it come to boil.\nPeal and cut vegitables into large chunks.\nThrow everything into big pot and top up water.\n*if using thermal pot, simmer for >5minutes, with final minute with the lid on.\n*leave in thermal pot between 2hours until overnight",
+        "Author": "Cynthia Ang"
     }
 ];
